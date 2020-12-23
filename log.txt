@@ -1,0 +1,50 @@
+To read a file in cmd.
+while read line; do echo $line; done < smiles_compound.txt 
+
+openbabel cmd line
+obabel -ismi 1.smi -opdb -O one.pdb --gen3d
+
+for i in line; do obabel -ismi smiles_compound.smi -opdb -O one.pdb --gen3d ; done < smiles_compound.smi
+for i in line; do obabel -ismi smiles_compound.smi -opdb -O $i.pdb --gen3d ; done < smiles_compound.smi
+#file='smiles_compound.smi'  
+#i=1  
+#while read line; do  
+#Reading each line  
+#obabel -ismi smiles_compound.smi -opdb -O i.pdb --gen3d  
+#i=$((i+1))  
+#done < $file  
+###########################################################################################################################################
+#!/bin/bash  
+name=1
+while read line
+do 
+echo $line > $name.smi
+name=`expr $name+1`
+done < smiles_compound_1.smi
+
+ for file in *.smi; do obabel -ismi $file -opdb -O $file.pdb --gen3d; done
+ for file in *.smi; do obabel -ismi $file -osdf -O $file.pdb --gen3d --join; done
+*******************************************************************************************************************************************
+Or
+*******************************************************************************************************************************************
+Use this command to convert one smile string to one .sdf or .pdb file 
+
+obabel -m -ismi smiles_compound.smi -osdf -O file.sdf --gen3D 
+
+obabel -ismi smiles_compound.smi -osdf -O ALL.sdf --gen3D          
+*******************************************************************************************************************************************
+To split one file to many use-
+     
+obabel -ismi smiles_compound.smi -opdb -O compounds.pdb --gen3D --split
+
+*******************************************************************************************************************************************
+multiple conversion of pdb to pdbqt
+
+obabel *.pdb -opdbqt -m -p --gen3d       
+
+###########################################################################################################################################
+PDB to PDBQT--> using MGL tools
+for file in *.pdb; do E:\softwares\AUTODOCK\MGL_tools\python.exe E:\softwares\AUTODOCK\MGL_tools\Lib\site-packages\AutoDockTools\Utilities24\prepare_ligand4.py -l $file.pdb; done   
+###########################################################################################################################################
+TO RUN THE PY CODE-->
+			vina_screen_get_top.py 10                                        
